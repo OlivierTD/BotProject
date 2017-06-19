@@ -18,10 +18,10 @@ var bot = new builder.UniversalBot(connector, function(session) {
     session.send("You said: %s", session.message.text);
 });
 
-server.get('/', function(req, res) {
-    res.send("Hello");
-    return next();   
-})
+server.get('/', restify.serverStatic ({
+    directory: __dirname,
+    default: '/index.html'
+}));
 
 server.listen(process.env.PORT || process.env.port || 8081);
 
