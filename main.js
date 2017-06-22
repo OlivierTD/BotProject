@@ -11,7 +11,7 @@ var connector = new builder.ChatConnector({
 });
 
 //Listen for messages
-server.post('api/messages', connector.listen());
+//server.post('api/messages', connector.listen());
 
 //Receive message from user and respond accordingly.
 //var bot = new builder.UniversalBot(connector, function(session) {
