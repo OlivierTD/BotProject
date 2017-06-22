@@ -24,6 +24,6 @@ server.get('/', restify.serveStatic ({
 }));
 
 console.log('BOOTING !, binding port follows')
-console.log('HERE IS THE ENV VARIABLE:',process.env.port)
-console.log(process.env.PORT || 80);
-server.listen(process.env.PORT || 80);
+console.log('HERE IS THE ENV VARIABLE:',process.env.PORT, process.env.port)
+console.log(process.env.PORT || 8081);
+server.listen(8081);
