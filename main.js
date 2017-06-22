@@ -17,6 +17,7 @@ server.post('api/messages', connector.listen());
 //Receive message from user and respond accordingly.
 var bot = new builder.UniversalBot(connector, function(session) {
     session.send("You said: %s", session.message.text);
+    session.send("Session info: " session);
 });
 
 server.get('/', restify.serveStatic ({
@@ -25,7 +26,7 @@ server.get('/', restify.serveStatic ({
 }));
 
 
-server.get('/send', restify)
+//server.get('/send', restify)
 
 
 server.listen(process.env.PORT || 8081);
