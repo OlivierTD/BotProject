@@ -23,8 +23,6 @@ server.get('/', restify.serveStatic ({
     default: '/index.html'
 }));
 
+console.log('BOOTING !, binding port follows')
+console.log(process.env.PORT || 8081);
 server.listen(process.env.PORT || 8081);
-
-
-console.log("Hello World from console.")
-
