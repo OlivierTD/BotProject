@@ -14,9 +14,9 @@ var connector = new builder.ChatConnector({
 server.post('api/messages', connector.listen());
 
 //Receive message from user and respond accordingly.
-var bot = new builder.UniversalBot(connector, function(session) {
-    session.send("You said: %s", session.message.text);
-});
+//var bot = new builder.UniversalBot(connector, function(session) {
+//    session.send("You said: %s", session.message.text);
+//});
 
 server.get('/', restify.serveStatic ({
     directory: __dirname,
@@ -26,4 +26,4 @@ server.get('/', restify.serveStatic ({
 console.log('BOOTING !, binding port follows')
 console.log('HERE IS THE ENV VARIABLE:',process.env.PORT, process.env.port)
 console.log(process.env.PORT || 8081);
-server.listen(8081);
+server.listen(process.env.PORT || 8081);
