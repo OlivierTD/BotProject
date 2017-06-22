@@ -24,8 +24,4 @@ server.get('/', restify.serveStatic ({
     default: '/index.html'
 }));
 
-console.log("CHAT CONNECTOR: ", process.env.APP_ID, process.env.APP_PASSWORD);
-console.log('BOOTING !, binding port follows');
-console.log('HERE IS THE ENV VARIABLE:',process.env.PORT, process.env.port);
-console.log(process.env.PORT || 8081);
 server.listen(process.env.PORT || 8081);
