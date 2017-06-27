@@ -49,7 +49,7 @@ bot.dialog('address', function (session, args) {
     //Attempting to save user address in dynamoDB
     var params = {
         Item: {
-            address
+            id: address
         },
         TableName: table
     };
