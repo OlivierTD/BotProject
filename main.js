@@ -65,7 +65,7 @@ server.get('/approbation', function(req, res, next) {
             console.log("User info: ", address)
 
             startProactiveDialog(address);
-            res.send('triggered bot approbation successfully. Here\'s the address info: ', JSON.stringify(address));
+            res.send('triggered bot approbation successfully. Here\'s the address info: ' + JSON.stringify(address));
         }
     });
     next();  
