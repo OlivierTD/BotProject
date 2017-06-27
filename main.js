@@ -103,19 +103,35 @@ bot.dialog('address', function (session, args) {
         },
         TableName: table
     };
-
-    docClient.put(params, function(err, data) {
+    //Verifying if user already exists in DynamoDB
+    docClient.get(params, function(err, data) {
         if (err) {
-            console.log(err, err.stack);
-            session.send("Error occured when trying to put in dynamoDB: ", err);
-            session.endDialog();
+            console.log("Error while trying to fetch user from dynamoDB");
         }
         else {
-            console.log("Successfully registered data in dynamoDB: " + JSON.stringify(params));
-            session.send("Successfully registered data in dynamoDB: " + JSON.stringify(params));
-            session.endDialog();
+            console.log("Successfully fetched user from dynamoDB");
+            var userExists = data;
         }
+
     });
+
+    if (userExists) {
+        session.send("You are already registered in dynamoDB!");
+    }
+    else {
+        docClient.put(params, function(err, data) {
+            if (err) {
+                console.log(err, err.stack);
+                session.send("Error occured when trying to put in dynamoDB: ", err);
+                session.endDialog();
+            }
+            else {
+                console.log("Successfully registered data in dynamoDB: " + JSON.stringify(params));
+                session.send("Successfully registered data in dynamoDB: " + JSON.stringify(params));
+                session.endDialog();
+            }
+        });
+    }
 });
 
 //Basic dialog to test approbation.
