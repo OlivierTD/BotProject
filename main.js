@@ -36,7 +36,7 @@ server.get('/', restify.serveStatic ({
 }));
 
 //Saving address of user if does not exist already.
-bot.dialog('/', function (session, args) {
+bot.dialog('/dialog', function (session, args) {
     
     address = session.message.address;
     console.log("Address: ", address);
