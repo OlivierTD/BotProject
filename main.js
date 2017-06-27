@@ -41,8 +41,9 @@ var bot = new builder.UniversalBot(connector, function(session) {
 bot.dialog('address', function (session, args) {
     
     var address = session.message.address;
+    var strAddress = JSON.stringify(address);
     console.log("Address: ", address);
-
+    
     var message = "Hello world from bot. Saving your address in dynamoDB for further use.";
     session.send(message);
 
@@ -50,7 +51,7 @@ bot.dialog('address', function (session, args) {
     var params = {
         Item: {
             "id": {
-                S: address
+                S: strAddress
             },
             "name": {
                 S: " "
