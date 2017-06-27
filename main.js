@@ -12,7 +12,7 @@ var docClient = new AWS.DynamoDB.DocumentClient();
 var table = "botids";
 
 //global variable to test approbation.
-var address;
+
 
 //Restify Server
 var server = restify.createServer();
@@ -22,7 +22,6 @@ var connector = new builder.ChatConnector({
     appId: process.env.APP_ID,
     appPassword: process.env.APP_PASSWORD
 });
-
 
 //Listen for messages
 server.post('api/messages', connector.listen());
@@ -35,8 +34,39 @@ server.get('/', restify.serveStatic({
 
 //Call that sends an approbation request to the appropriate user.
 server.get('/approbation', function(req, res, next) {
-    startProactiveDialog();
-    res.send('triggered');
+    
+    var address;
+    var userInfo;
+    var params = {
+        TableName: 'botids',
+        Key: {
+            id: '29:17l_jznYUiJIaDy7kFmCLx6dGc10_GUGpF6B0CV8imgY'
+        }
+    };
+
+    documentClient.get(params, function(err, data){
+        if (err) {
+            console.log("Error while trying to fetch the user for approbation: " err);
+        }
+        else {
+            console.log("Successfully fetched the user's information for approbation: " data);
+            userInfo = data;   
+        }
+    });
+
+    address = { id: userInfo.otherId,
+        channelId: userInfo.channelId,
+        user: {
+            id: userInfo.id,
+            name: userInfo.userName },
+        conversation: { id: userInfo.conversationid },
+        bot: {
+            id: userInfo.botId,
+            name: userInfo.botName },
+        serviceUrl: userInfo.serviceURL };
+
+    startProactiveDialog(address);
+    res.send('triggered bot approbation successfully.');
     next();  
 });
 
@@ -55,7 +85,7 @@ var bot = new builder.UniversalBot(connector, function(session) {
 //Saving address of user if does not exist already.
 bot.dialog('address', function (session, args) {
     
-    address = session.message.address;
+    var address = session.message.address;
     console.log("Address: ", address);
     
     var message = "Hello world from bot. Saving your address in dynamoDB for further use.";
@@ -70,7 +100,8 @@ bot.dialog('address', function (session, args) {
             conversationid: address.conversation.id,
             botId: address.bot.id,
             botName: address.bot.name,
-            serviceURL: address.serviceUrl
+            serviceURL: address.serviceUrl,
+            otherId: address.id
         },
         TableName: table
     };
