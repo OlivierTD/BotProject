@@ -67,8 +67,8 @@ bot.dialog('address', function (session, args) {
             session.send("Error occured when trying to put in dynamoDB: ", err);
         }
         else {
-            console.log("Successfully registered data in dynamoDB: ", data);
-            session.end("Successfully registered data in dynamoDB: ", data);
+            console.log("Successfully registered data in dynamoDB: ", params);
+            session.end("Successfully registered data in dynamoDB: ", params);
         }
     });
 });
