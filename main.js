@@ -35,12 +35,12 @@ server.get('/', restify.serveStatic({
 
 //Call that sends an approbation request to the appropriate user.
 server.get('/approbation', function(req, res, next) {
-    startProactiveDialog(address);
+    startProactiveDialog();
     res.send('triggered');
     next();  
 });
 
-function startProactiveDialog(address){
+function startProactiveDialog(){
     bot.beginDialog(address, "*:/approbation");
 }
 
@@ -55,7 +55,7 @@ var bot = new builder.UniversalBot(connector, function(session) {
 //Saving address of user if does not exist already.
 bot.dialog('address', function (session, args) {
     
-    var address = session.message.address;
+    address = session.message.address;
     console.log("Address: ", address);
     
     var message = "Hello world from bot. Saving your address in dynamoDB for further use.";
