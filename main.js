@@ -55,7 +55,7 @@ server.get('/approbation', function(req, res, next) {
     });
 
     address = { id: userInfo.otherId,
-        channelId: userInfo.channelId,
+        channelId: userInfo.channelid,
         user: {
             id: userInfo.id,
             name: userInfo.userName },
@@ -64,9 +64,11 @@ server.get('/approbation', function(req, res, next) {
             id: userInfo.botId,
             name: userInfo.botName },
         serviceUrl: userInfo.serviceURL };
+    
+    console.log("User info: ", address)
 
     startProactiveDialog(address);
-    res.send('triggered bot approbation successfully.');
+    res.send('triggered bot approbation successfully. Here\' the info of the user.', address);
     next();  
 });
 
