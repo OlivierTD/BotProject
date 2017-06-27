@@ -60,7 +60,7 @@ bot.dialog('address', function (session, args) {
         TableName: table
     };
 
-    dynamodb.putItem(params, function(err, data) {
+    dynamodb.put(params, function(err, data) {
         if (err) {
             console.log(err, err.stack);
             session.send("Error occured when trying to putItem in dynamoDB: ", err);
