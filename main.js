@@ -35,7 +35,6 @@ server.get('/', restify.serveStatic({
 //Call that sends an approbation request to the appropriate user.
 server.get('/approbation', function(req, res, next) {
     
-    var address;
     var userInfo;
     var params = {
         TableName: 'botids',
@@ -52,16 +51,16 @@ server.get('/approbation', function(req, res, next) {
             console.log("Successfully fetched the user's information for approbation: ", data);
             userInfo = data.Item;   
             console.log("Here's the userInfo object now: ", userInfo);
-            address = { id: userInfo.otherId,
-            channelId: userInfo.channelid,
-            user: {
-                id: userInfo.id,
-                name: userInfo.userName },
-            conversation: { id: userInfo.conversationid },
-            bot: {
-                id: userInfo.botId,
-                name: userInfo.botName },
-            serviceUrl: userInfo.serviceURL };
+            var address = { id: userInfo.otherId,
+                channelId: userInfo.channelid,
+                user: {
+                    id: userInfo.id,
+                    name: userInfo.userName },
+                conversation: { id: userInfo.conversationid },
+                bot: {
+                    id: userInfo.botId,
+                    name: userInfo.botName },
+                serviceUrl: userInfo.serviceURL };
     
             console.log("User info: ", address)
 
