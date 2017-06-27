@@ -107,12 +107,14 @@ bot.dialog('address', function (session, args) {
     docClient.get(params, function(err, data) {
         if (err) {
             console.log("Error while trying to fetch user from dynamoDB");
+            session.endDialog();
         }
         else {
             console.log("Successfully fetched user from dynamoDB");
             var userExists = data;
             if (typeof userExists != 'undefined') {
                 session.send("You are already registered in dynamoDB!");
+                session.endDialog();
             }
             else {
                 docClient.put(params, function(err, data) {
