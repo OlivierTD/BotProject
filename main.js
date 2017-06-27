@@ -11,6 +11,8 @@ AWS.config.update({
 var docClient = new AWS.DynamoDB.DocumentClient();
 var table = "botids";
 
+//global variable to test approbation.
+var address;
 
 //Restify Server
 var server = restify.createServer();
@@ -25,16 +27,21 @@ var connector = new builder.ChatConnector({
 //Listen for messages
 server.post('api/messages', connector.listen());
 
+//Basic chat display.
 server.get('/', restify.serveStatic({
     directory: __dirname,
     default: '/index.html'
 }));
 
+//Call that sends an approbation request to the appropriate user.
+server.get('/approbation', function(req, res, next) {
+    startProactiveDialog(address);
+    res.send('triggered');
+    next();  
+});
 
-server.get('/approbation', approbation);
-
-function approbation(req, res, next){
-    session.beginDialog('approbation')
+function startProactiveDialog(address){
+    bot.beginDialog(address, "*:/approbation");
 }
 
 
@@ -72,16 +79,21 @@ bot.dialog('address', function (session, args) {
         if (err) {
             console.log(err, err.stack);
             session.send("Error occured when trying to put in dynamoDB: ", err);
+            session.endDialog();
         }
         else {
             console.log("Successfully registered data in dynamoDB: ", params);
             session.send("Successfully registered data in dynamoDB: ", params);
+            session.endDialog();
         }
     });
 });
 
+//Basic dialog to test approbation.
 bot.dialog('approbation', function(session, args) {
-    session.send('Hello world from approbation.'); 
+    console.log('Hello world from approbation.');
+    session.send('Hello world from approbation.');
+    session.endDialog(); 
 });
 
 server.listen(process.env.PORT || 8081);
