@@ -57,7 +57,7 @@ bot.dialog('address', function (session, args) {
     docClient.put(params, function(err, data) {
         if (err) {
             console.log(err, err.stack);
-            session.send("Error occured when trying to putItem in dynamoDB: ", err);
+            session.send("Error occured when trying to put in dynamoDB: ", err);
         }
         else {
             console.log("Successfully registered data in dynamoDB: ", data);
