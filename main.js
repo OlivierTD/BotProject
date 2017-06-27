@@ -114,8 +114,8 @@ bot.dialog('address', function (session, args) {
             session.endDialog();
         }
         else {
-            console.log("Successfully registered data in dynamoDB: ", params);
-            session.send("Successfully registered data in dynamoDB: ", params);
+            console.log("Successfully registered data in dynamoDB: " + JSON.stringify(params));
+            session.send("Successfully registered data in dynamoDB: " + JSON.stringify(params));
             session.endDialog();
         }
     });
