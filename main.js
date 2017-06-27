@@ -46,10 +46,10 @@ server.get('/approbation', function(req, res, next) {
 
     documentClient.get(params, function(err, data){
         if (err) {
-            console.log("Error while trying to fetch the user for approbation: " err);
+            console.log("Error while trying to fetch the user for approbation: ", err);
         }
         else {
-            console.log("Successfully fetched the user's information for approbation: " data);
+            console.log("Successfully fetched the user's information for approbation: ", data);
             userInfo = data;   
         }
     });
