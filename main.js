@@ -49,10 +49,9 @@ bot.dialog('address', function (session, args) {
     //Attempting to save user address in dynamoDB
     var params = {
         Item: {
-            id: address.id,
-            channelid: address.channelId,
-            userId: address.user.id,
+            id: address.user.id,
             userName: address.user.name,
+            channelid: address.channelId,
             conversationid: address.conversation.id,
             botId: address.bot.id,
             botName: address.bot.name,
