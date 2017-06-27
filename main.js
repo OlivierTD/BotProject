@@ -50,7 +50,7 @@ server.get('/approbation', function(req, res, next) {
         }
         else {
             console.log("Successfully fetched the user's information for approbation: ", data);
-            userInfo = data;   
+            userInfo = data.Item;   
         }
     });
 
