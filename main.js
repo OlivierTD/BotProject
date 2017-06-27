@@ -53,7 +53,7 @@ server.get('/approbation', function(req, res, next) {
             userInfo = data.Item;   
         }
     });
-
+    console.log("Here's the userInfo object now: ", userInfo);
     address = { id: userInfo.otherId,
         channelId: userInfo.channelid,
         user: {
