@@ -68,7 +68,7 @@ bot.dialog('address', function (session, args) {
         }
         else {
             console.log("Successfully registered data in dynamoDB: ", params);
-            session.end("Successfully registered data in dynamoDB: ", params);
+            session.send("Successfully registered data in dynamoDB: ", params);
         }
     });
 });
