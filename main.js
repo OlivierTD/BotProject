@@ -67,15 +67,16 @@ server.get('/approbation', function(req, res, next) {
     next();  
 });
 
-function startProactiveDialog(address){
-    bot.beginDialog(address, "approbation");
-}
-
 
 //Receive message from user and respond accordingly.
 var bot = new builder.UniversalBot(connector, function(session) {
-    session.send("You said: %s", session.message.text);
-    session.beginDialog('address');
+    if (session.message.text == "register me"){
+        session.beginDialog('address');
+    }
+    else {
+        session.send("You said: %s", session.message.text);
+        session.send("If you want to register yourself so that the bot can send you approbations, please type \"register me\"");
+    }    
 });
 
 
