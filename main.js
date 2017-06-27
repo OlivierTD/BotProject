@@ -25,6 +25,11 @@ var connector = new builder.ChatConnector({
 //Listen for messages
 server.post('api/messages', connector.listen());
 
+server.get('/', restify.serveStatic({
+    directory: __dirname,
+    default: '/index.html'
+}));
+
 //Receive message from user and respond accordingly.
 var bot = new builder.UniversalBot(connector, function(session) {
     session.send("You said: %s", session.message.text);
@@ -32,7 +37,7 @@ var bot = new builder.UniversalBot(connector, function(session) {
 
 
 //Saving address of user if does not exist already.
-bot.dialog('/', function (session, args) {
+bot.dialog('/address', function (session, args) {
     
     var address = session.message.address;
     console.log("Address: ", address);
