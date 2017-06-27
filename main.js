@@ -51,24 +51,24 @@ server.get('/approbation', function(req, res, next) {
         else {
             console.log("Successfully fetched the user's information for approbation: ", data);
             userInfo = data.Item;   
+            console.log("Here's the userInfo object now: ", userInfo);
+            address = { id: userInfo.otherId,
+            channelId: userInfo.channelid,
+            user: {
+                id: userInfo.id,
+                name: userInfo.userName },
+            conversation: { id: userInfo.conversationid },
+            bot: {
+                id: userInfo.botId,
+                name: userInfo.botName },
+            serviceUrl: userInfo.serviceURL };
+    
+            console.log("User info: ", address)
+
+            startProactiveDialog(address);
+            res.send('triggered bot approbation successfully. Here\' the info of the user.', address);
         }
     });
-    console.log("Here's the userInfo object now: ", userInfo);
-    address = { id: userInfo.otherId,
-        channelId: userInfo.channelid,
-        user: {
-            id: userInfo.id,
-            name: userInfo.userName },
-        conversation: { id: userInfo.conversationid },
-        bot: {
-            id: userInfo.botId,
-            name: userInfo.botName },
-        serviceUrl: userInfo.serviceURL };
-    
-    console.log("User info: ", address)
-
-    startProactiveDialog(address);
-    res.send('triggered bot approbation successfully. Here\' the info of the user.', address);
     next();  
 });
 
