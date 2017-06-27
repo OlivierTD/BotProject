@@ -33,11 +33,12 @@ server.get('/', restify.serveStatic({
 //Receive message from user and respond accordingly.
 var bot = new builder.UniversalBot(connector, function(session) {
     session.send("You said: %s", session.message.text);
+    session.beginDialog('address');
 });
 
 
 //Saving address of user if does not exist already.
-bot.dialog('/address', function (session, args) {
+bot.dialog('address', function (session, args) {
     
     var address = session.message.address;
     console.log("Address: ", address);
