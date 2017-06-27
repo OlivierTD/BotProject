@@ -30,6 +30,14 @@ server.get('/', restify.serveStatic({
     default: '/index.html'
 }));
 
+
+server.get('/approbation', approbation);
+
+function approbation(req, res, next){
+    session.beginDialog('approbation')
+}
+
+
 //Receive message from user and respond accordingly.
 var bot = new builder.UniversalBot(connector, function(session) {
     session.send("You said: %s", session.message.text);
@@ -72,6 +80,8 @@ bot.dialog('address', function (session, args) {
     });
 });
 
-
+bot.dialog('approbation', function(session, args) {
+    session.send('Hello world from approbation.'); 
+});
 
 server.listen(process.env.PORT || 8081);
