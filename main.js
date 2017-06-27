@@ -8,7 +8,7 @@ AWS.config.update({
 });
 
 //Connecting to dynamoDB
-var dynamodb = new AWS.DynamoDB.DocumentClient();
+var docClient = new AWS.DynamoDB.DocumentClient();
 var table = "botids";
 
 
@@ -41,7 +41,6 @@ var bot = new builder.UniversalBot(connector, function(session) {
 bot.dialog('address', function (session, args) {
     
     var address = session.message.address;
-    var strAddress = JSON.stringify(address);
     console.log("Address: ", address);
     
     var message = "Hello world from bot. Saving your address in dynamoDB for further use.";
@@ -50,18 +49,12 @@ bot.dialog('address', function (session, args) {
     //Attempting to save user address in dynamoDB
     var params = {
         Item: {
-            "id": {
-                S: strAddress
-            },
-            "name": {
-                S: " "
-            }   
+            address
         },
-        ReturnConsumedCapacity: "TOTAL",
         TableName: table
     };
 
-    dynamodb.put(params, function(err, data) {
+    docClient.put(params, function(err, data) {
         if (err) {
             console.log(err, err.stack);
             session.send("Error occured when trying to putItem in dynamoDB: ", err);
