@@ -30,15 +30,11 @@ var bot = new builder.UniversalBot(connector, function(session) {
     session.send("You said: %s", session.message.text);
 });
 
-server.get('/', restify.serveStatic ({
-    directory: __dirname,
-    default: '/index.html'
-}));
 
 //Saving address of user if does not exist already.
-bot.dialog('/dialog', function (session, args) {
+bot.dialog('/', function (session, args) {
     
-    address = session.message.address;
+    var address = session.message.address;
     console.log("Address: ", address);
 
     var message = "Hello world from bot. Saving your address in dynamoDB for further use.";
