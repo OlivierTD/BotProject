@@ -44,7 +44,7 @@ server.get('/approbation', function(req, res, next) {
         }
     };
 
-    documentClient.get(params, function(err, data){
+    docClient.get(params, function(err, data){
         if (err) {
             console.log("Error while trying to fetch the user for approbation: ", err);
         }
