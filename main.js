@@ -59,12 +59,14 @@ bot.dialog('/', function (session, args) {
     };
 
     dynamodb.putItem(params, function(err, data) {
-        if (err) 
+        if (err) {
             console.log(err, err.stack);
             session.send("Error occured when trying to putItem in dynamoDB: ", err);
-        else
+        }
+        else {
             console.log("Successfully registered data in dynamoDB: ", data);
             session.end("Successfully registered data in dynamoDB: ", data);
+        }
     });
 });
 
