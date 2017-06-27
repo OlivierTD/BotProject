@@ -115,6 +115,8 @@ bot.dialog('address', function (session, args) {
 
     });
 
+    session.send("userExists: " + JSON.stringify(userExists));
+
     if (typeof userExists != 'undefined') {
         session.send("You are already registered in dynamoDB!");
     }
