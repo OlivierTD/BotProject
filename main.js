@@ -4,15 +4,11 @@ var AWS = require("aws-sdk");
 
 AWS.config.update({
     region: "ca-central-1",
-    //endpoint: "http://localhost:8000"
 });
 
 //Connecting to dynamoDB
 var docClient = new AWS.DynamoDB.DocumentClient();
 var table = "botids";
-
-//global variable to test approbation.
-
 
 //Restify Server
 var server = restify.createServer();
@@ -37,20 +33,20 @@ server.get('/approbation', function(req, res, next) {
     
     var userInfo;
     var params = {
-        TableName: 'botids',
+        TableName: table,
         Key: {
-            id: '29:17l_jznYUiJIaDy7kFmCLx6dGc10_GUGpF6B0CV8imgY'
+            id: '29:17l_jznYUiJIaDy7kFmCLx6dGc10_GUGpF6B0CV8imgY' //Hardcoded for now, but could be any id.
         }
     };
-
+    
+    //Attempt to fetch the address information of the user's conversation
     docClient.get(params, function(err, data){
         if (err) {
             console.log("Error while trying to fetch the user for approbation: ", err);
         }
         else {
-            console.log("Successfully fetched the user's information for approbation: ", data);
+            console.log("Successfully fetched the user's information for approbation: ");
             userInfo = data.Item;   
-            console.log("Here's the userInfo object now: ", userInfo);
             var address = { id: userInfo.otherId,
                 channelId: userInfo.channelid,
                 user: {
@@ -62,10 +58,10 @@ server.get('/approbation', function(req, res, next) {
                     name: userInfo.botName },
                 serviceUrl: userInfo.serviceURL };
     
-            console.log("User info: ", address)
-
-            startProactiveDialog(address);
+            console.log("Address to send approbation: ", address)
             res.send('triggered bot approbation successfully. Here\'s the address info: ' + JSON.stringify(address));
+            
+            bot.beginDialog(address, "approbation");
         }
     });
     next();  
