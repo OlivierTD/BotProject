@@ -41,7 +41,7 @@ server.get('/approbation', function(req, res, next) {
 });
 
 function startProactiveDialog(){
-    bot.beginDialog(address, "*:/approbation");
+    bot.beginDialog(address, "approbation");
 }
 
 
