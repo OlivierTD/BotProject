@@ -83,7 +83,7 @@ server.get('/approbation', function(req, res, next) {
                     name: userInfo.botName },
                 serviceUrl: userInfo.serviceURL };
     
-            console.log("Address to send approbation: ", address)
+            console.log("Address to send approbation: ", address);
             res.send('triggered bot approbation successfully. Here\'s the address info: ' + JSON.stringify(address));
             
             bot.beginDialog(address, "approbation");
