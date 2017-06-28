@@ -121,7 +121,7 @@ bot.dialog('address', function (session, args) {
         else {
             console.log("Successfully performed the get method.");
             console.log("Attempting addition of user into dynamoDB if necessary.");
-            if (typeof data == "undefined"){
+            if (data === undefined){
                 docClient.put(params, function(err, data) {
                     if (err) {
                         console.log(err, err.stack);
@@ -136,6 +136,8 @@ bot.dialog('address', function (session, args) {
                 }); 
             }
             else {
+                console.log("Data: " + JSON.stringify(data));
+                session.send("Data: " + JSON.stringify(data));
                 session.send("You are already registered in dynamoDB!");
                 session.endDialog();
             }
