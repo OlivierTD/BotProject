@@ -87,7 +87,7 @@ bot.dialog('address', function (session, args) {
     var address = session.message.address;
     console.log("Address: ", address);
     
-    var message = "Hello world from bot. Saving your address in dynamoDB for further use.";
+    var message = "Hello world from bot. You typed in \"register me\".";
     session.send(message);
 
     //Attempting to save user address in dynamoDB
@@ -117,24 +117,28 @@ bot.dialog('address', function (session, args) {
     docClient.get(paramsGet, function(err, data) {
         if (err) {
             console.log("Error while trying to fetch user from dynamoDB: " + err);
-            console.log("Attempting addition of user into dynamoDB.");
-            docClient.put(params, function(err, data) {
-                if (err) {
-                    console.log(err, err.stack);
-                    session.send("Error occured when trying to put in dynamoDB: ", err);
-                    session.endDialog();
-                }
-                else {
-                    console.log("Successfully registered data in dynamoDB: " + JSON.stringify(params));
-                    session.send("Successfully registered data in dynamoDB: " + JSON.stringify(params));
-                    session.endDialog();
-                }
-            }); 
         }
         else {
-            console.log("Successfully fetched user from dynamoDB");
-            session.send("You are already registered in dynamoDB!");
-            session.endDialog();
+            console.log("Successfully performed the get method.");
+            console.log("Attempting addition of user into dynamoDB if necessary.");
+            if (data){
+                docClient.put(params, function(err, data) {
+                    if (err) {
+                        console.log(err, err.stack);
+                        session.send("Error occured when trying to put in dynamoDB: ", err);
+                        session.endDialog();
+                    }
+                    else {
+                        console.log("Successfully registered data in dynamoDB: " + JSON.stringify(params));
+                        session.send("Successfully registered data in dynamoDB: " + JSON.stringify(params));
+                        session.endDialog();
+                    }
+                }); 
+            }
+            else {
+                session.send("You are already registered in dynamoDB!");
+                session.endDialog();
+            }
         }
 
     });
