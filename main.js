@@ -31,6 +31,31 @@ server.get('/', restify.serveStatic({
 //Call that sends an approbation request to the appropriate user.
 server.get('/approbation', function(req, res, next) {
     
+   //Will create a request if it does not exist. 
+    var params = {
+        Item: {
+            requestID: "5555-5555-5556"
+            accountID: "0000-0000-0001",
+            trxCode: "9999-9999-9990",
+            state: "pending",
+        },
+        TableName: "requests"
+    };
+
+    docClient.put(params, function(err, data) {
+        if (err) {
+            console.log(err, err.stack);
+            session.send("Error occured when trying to put in dynamoDB: ", err);
+            session.endDialog();
+        }
+        else {
+            console.log("Successfully registered data in dynamoDB: " + JSON.stringify(params));
+            session.send("Successfully registered data in dynamoDB: " + JSON.stringify(params));
+            session.endDialog();
+        }
+    }); 
+
+
     var userInfo;
     var params = {
         TableName: table,
@@ -43,7 +68,6 @@ server.get('/approbation', function(req, res, next) {
     docClient.get(params, function(err, data){
         if (err) {
             console.log("Error while trying to fetch the user for approbation: ", err);
-            session.endDialog();
         }
         else {
             console.log("Successfully fetched the user's information for approbation: ");
@@ -66,6 +90,32 @@ server.get('/approbation', function(req, res, next) {
         }
     });
     next();  
+});
+
+server.post('/approbation-answer', function(req, res, next){
+ 
+    var params = {
+        Item: {
+            requestID: "5555-5555-5556"
+            accountID: "0000-0000-0001",
+            trxCode: "9999-9999-9990",
+            state: "approved",
+        },
+        TableName: "requests"
+    };
+
+    docClient.put(params, function(err, data) {
+        if (err) {
+            console.log(err, err.stack);
+            session.send("Error occured when trying to put in dynamoDB: ", err);
+            session.endDialog();
+        }
+        else {
+            console.log("Successfully registered data in dynamoDB: " + JSON.stringify(params));
+            session.send("Successfully registered data in dynamoDB: " + JSON.stringify(params));
+            session.endDialog();
+        }
+    }); 
 });
 
 
@@ -165,7 +215,7 @@ bot.dialog('approbation', function(session, args) {
                    },
                    {
                        "type": "TextBlock",
-                       "text": "Acc Number: 0000-0000-0001",
+                       "text": "Acc Number: 0000-0000-0001"
                    },
                    {
                        "type": "TextBlock",
@@ -193,7 +243,10 @@ bot.dialog('approbation', function(session, args) {
     session.endDialog(); 
 });
 
-
+bot.dialog('approbation_answer', function(session, args){
+    
+    session.endDialog();
+});
 
 server.listen(process.env.PORT || 8081);
 
