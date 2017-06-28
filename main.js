@@ -239,9 +239,10 @@ bot.dialog('approbation', function(session, args) {
             }
         });
     
-    
+    session.send(msg);
+
     session.endDialog(); 
-});
+}); 
 
 bot.dialog('approbation_answer', function(session, args){
     
