@@ -191,7 +191,7 @@ bot.dialog('approbation', function(session, args) {
     session.endDialog(); 
 }); 
 
-bot.beginDialogAction('approbation-answer', '/approbationAnswer')
+bot.beginDialogAction('approbation-answer', 'approbationAnswer');
 
 bot.dialog('approbationAnswer', function(session, args){
     
