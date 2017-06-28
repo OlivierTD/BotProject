@@ -34,10 +34,10 @@ server.get('/approbation', function(req, res, next) {
    //Will create a request if it does not exist. 
     var params = {
         Item: {
-            requestID: "5555-5555-5556"
+            requestID: "5555-5555-5556",
             accountID: "0000-0000-0001",
             trxCode: "9999-9999-9990",
-            state: "pending",
+            state: "pending"
         },
         TableName: "requests"
     };
@@ -96,10 +96,10 @@ server.post('/approbation-answer', function(req, res, next){
  
     var params = {
         Item: {
-            requestID: "5555-5555-5556"
+            requestID: "5555-5555-5556",
             accountID: "0000-0000-0001",
             trxCode: "9999-9999-9990",
-            state: "approved",
+            state: "approved"
         },
         TableName: "requests"
     };
