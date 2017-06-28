@@ -87,7 +87,7 @@ bot.dialog('address', function (session, args) {
     var address = session.message.address;
     console.log("Address: ", address);
     
-    var message = "Hello world from bot. You typed in \"register me\".";
+    var message = "You typed in \"register me\".";
     session.send(message);
 
     //Attempting to save user address in dynamoDB
@@ -136,8 +136,8 @@ bot.dialog('address', function (session, args) {
                 }); 
             }
             else {
-                console.log("Data: " + JSON.stringify(data));
-                session.send("Data: " + JSON.stringify(data));
+                console.log("Type of Data: " + (typeof data);
+                session.send("Data: " + (typeof data);
                 session.send("You are already registered in dynamoDB!");
                 session.endDialog();
             }
