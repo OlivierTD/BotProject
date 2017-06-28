@@ -149,9 +149,56 @@ bot.dialog('address', function (session, args) {
 
 //Basic dialog to test approbation.
 bot.dialog('approbation', function(session, args) {
-    console.log('Hello world from approbation.');
     session.send('Hello world from approbation.');
+    
+    var msg = new builder.Message(session)
+        .addAttachment({
+            contentType: "application/vnd.microsoft.card.adaptive",
+            content: {
+                type: "AdaptiveCard",
+                body: [
+                   {
+                       "type": "TextBlock",
+                       "text": "Approval Requested",
+                       "size": "large",
+                       "weight": "bolder"
+                   },
+                   {
+                       "type": "TextBlock",
+                       "text": "Acc Number: 0000-0000-0001",
+                   },
+                   {
+                       "type": "TextBlock",
+                       "text": "Amount: 100000000000$"
+                   }
+                ],
+                "actions": [
+                   {
+                       "type": "Action.Http",
+                       "method": "POST",
+                       "url": "https://o-trepanier.com/approbation-answer",
+                       "title": "Approve"
+                   },
+                   {
+                       "type": "Action.Http",
+                       "method": "POST",
+                       "url": "httpsL//o-trepanier.com/approbation-answer",
+                       "title": "Decline"
+                   }
+                ]
+            }
+        });
+    
+    
     session.endDialog(); 
 });
 
+
+
 server.listen(process.env.PORT || 8081);
+
+
+
+
+
+
