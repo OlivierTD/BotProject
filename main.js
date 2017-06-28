@@ -104,10 +104,19 @@ bot.dialog('address', function (session, args) {
         },
         TableName: table
     };
+
+    var paramsGet = {
+        TableName: table,
+        Key: {
+            id: address.user.id
+        }
+    };
+
+
     //Verifying if user already exists in DynamoDB
-    docClient.get(params, function(err, data) {
+    docClient.get(paramsGet, function(err, data) {
         if (err) {
-            console.log("Error while trying to fetch user from dynamoDB.");
+            console.log("Error while trying to fetch user from dynamoDB: " + err);
             console.log("Attempting addition of user into dynamoDB.");
             docClient.put(params, function(err, data) {
                 if (err) {
