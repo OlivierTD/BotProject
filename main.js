@@ -137,7 +137,6 @@ bot.dialog('address', function (session, args) {
             }
             else {
                 console.log("Type of Data: " + (typeof data));
-                session.send("Data: " + (typeof data));
                 session.send("You are already registered in dynamoDB!");
                 session.endDialog();
             }
