@@ -205,8 +205,8 @@ bot.dialog('approbation', function(session, args) {
         .addAttachment({
             contentType: "application/vnd.microsoft.card.adaptive",
             content: {
-                type: "AdaptiveCard",
-                body: [
+                "type": "AdaptiveCard",
+                "body": [
                    {
                        "type": "TextBlock",
                        "text": "Approval Requested",
