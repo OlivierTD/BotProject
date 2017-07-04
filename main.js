@@ -119,7 +119,39 @@ server.post('/approb-answer', function approval(req, res, next) {
         }
     });
     
-    session.endDialog("You %s the transaction", args.data);
+    var userInfo;
+    var params = {
+        TableName: table,
+        Key: {
+            id: 'U62N5L0EL:T63CBFV98' //Hardcoded for now, but could be any id.
+        }
+    };
+    
+    //Attempt to fetch the address information of the user's conversation
+    docClient.get(params, function(err, data){
+        if (err) {
+            console.log("Error while trying to fetch the user for approbation: ", err);
+        }
+        else {
+            console.log("Successfully fetched the user's information for approbation: ");
+            userInfo = data.Item;   
+            var address = { id: userInfo.otherId,
+                channelId: userInfo.channelid,
+                user: {
+                    id: userInfo.id,
+                    name: userInfo.userName },
+                conversation: { id: userInfo.conversationid },
+                bot: {
+                    id: userInfo.botId,
+                    name: userInfo.botName },
+                serviceUrl: userInfo.serviceURL };
+    
+            console.log("Address to send approbation: ", address);
+            res.send('triggered bot approbation successfully. Here\'s the address info: ' + JSON.stringify(address));
+            
+            bot.beginDialog(address, "approb-answer");
+        }
+    });
     
 });
 
@@ -250,6 +282,13 @@ bot.dialog('approbationAnswer', function(session, args){
     
     session.endDialog("You %s the transaction", args.data);
 });
+
+bot.dialog('approb-answer', function(session, args) {
+   session.send('Hello world from approb-answer'); 
+    
+    
+});
+
 
 server.listen(process.env.PORT || 8081);
 
