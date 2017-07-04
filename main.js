@@ -28,11 +28,6 @@ server.get('/', restify.serveStatic({
     default: '/approbForm.html'
 }));
 
-server.get('/approbationform', restify.serveStatic({
-    directory: __dirname,
-    default: '/approbForm.html'
-}));
-
 //Call that sends an approbation request to the appropriate user.
 server.post('/approbation', function(req, res, next) {
     
