@@ -219,7 +219,7 @@ bot.dialog('approbation', function(session, args) {
         "text": "Approval Request",
         "attachments": [
             {
-                "text": "trx-id: 9999-9999-9990 \nAmount: 0.00000000001$",
+                "text": "trx-id: 9999-9999-9990 Amount: 0.00000000001$",
                 "fallback": "Oops, something went wrong.",
                 "color": "#3AA3E3",
                 "attachment_type": "default",
