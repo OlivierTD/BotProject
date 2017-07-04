@@ -90,7 +90,7 @@ server.post('/approbation/:requestID&:accountID&:trxCode', function(req, res, ne
             console.log("Address to send approbation: ", address);
             res.send('triggered bot approbation successfully. Here\'s the address info: ' + JSON.stringify(address) +"\n\nHere's the parameters sent: " + params);
             
-            bot.beginDialog(address, "approbation", params);
+            bot.beginDialog(address, "approbation", params.Item);
         }
     });
     return next();  
@@ -207,11 +207,6 @@ bot.dialog('address', function (session, args) {
 bot.dialog('approbation', [
         function (session, test, args) {
             session.send('Hello world from approbation.');
-            session.send('Values in args: ');
-            for (var k in args) {
-                session.send(k + ": " + args[k]);
-            }
-            session.send('Values in test:');
             for (var k in test) {
                 session.send(k + ": " + args[k]);
             }
