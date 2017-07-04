@@ -202,16 +202,16 @@ bot.dialog('address', function (session, args) {
 
 //Basi dialog to test approbation.
 bot.dialog('approbation', [
-        function(session) {
+        function (session) {
             session.send('Hello world from approbation.');
             
-            builder.Prompts.choice(session, 'Approval Request\ntrx-id: 9999-9999-9990\nAmount: 0.00000001$',['Approve', 'Decline']);
+            builder.Prompts.choice(session, 'Approval Request',"Approve|Decline", "button");
         },
-        function(session, result){
-            console.log('result:\n');
-            console.log(result);
+        function(session, results){
+            console.log('results:\n');
+            console.log(results);
 
-            switch(result.response.entity) {
+            switch(results.response.entity) {
                 case 'Approve':
                     session.send('You approved the transaction.');
                     break;
