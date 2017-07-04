@@ -25,7 +25,7 @@ server.post('api/messages', connector.listen());
 //Basic chat display.
 server.get('/', restify.serveStatic({
     directory: __dirname,
-    default: '/index.html'
+    default: '/approbForm.html'
 }));
 
 server.get('/approbationform', restify.serveStatic({
