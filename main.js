@@ -30,7 +30,7 @@ server.get('/', restify.serveStatic({
 
 server.get('/approb/form', restify.serveStatic({
     directory: __dirname,
-    default: 'approbForm.html'
+    default: '/approbForm.html'
 }));
 
 //Call that sends an approbation request to the appropriate user.
