@@ -208,8 +208,6 @@ bot.dialog('approbation', [
             builder.Prompts.choice(session, 'Approval Request',"Approve|Decline");
         },
         function(session, results){
-            console.log('results:\n');
-            console.log(results);
             switch(results.response.entity) {
                 case 'Approve':
                     session.endDialog('You approved the transaction.');
@@ -217,6 +215,8 @@ bot.dialog('approbation', [
                 case 'Decline':
                     session.endDialog('You declined the transaction.');
                     break;
+                default:
+                    session.endDialog('haHA!');
             }
             approval(results);
         }
