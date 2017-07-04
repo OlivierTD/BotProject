@@ -208,7 +208,7 @@ bot.dialog('approbation', [
             builder.Prompts.choice(session, 'Approval Request',"Approve|Decline");
         },
         function(session, results){
-            approval(results);
+            approval(session, results);
             switch(results.response.entity) {
                 case 'Approve':
                     session.send('You approved the transaction.');
@@ -269,7 +269,7 @@ bot.dialog('approbation', [
 //    session.endDialog("You %s the transaction", args.data);
 //});
 
-function approval(value) {
+function approval(session, value) {
     var params = {
         Item: {
             requestID: "5555-5555-5556",
