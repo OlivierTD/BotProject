@@ -28,7 +28,7 @@ server.get('/', restify.serveStatic({
     default: '/index.html'
 }));
 
-server.get('/approb/form', restify.serveStatic({
+server.get('/approbationform', restify.serveStatic({
     directory: __dirname,
     default: '/approbForm.html'
 }));
