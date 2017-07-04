@@ -30,7 +30,10 @@ server.get('/', restify.serveStatic({
 
 //Call that sends an approbation request to the appropriate user.
 server.post('/approbation', function(req, res, next) {
-    
+   
+    console.log("Request from post: " + req);
+
+
    //Will create a request if it does not exist. 
     var params = {
         Item: {
