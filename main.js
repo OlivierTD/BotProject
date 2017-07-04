@@ -60,7 +60,7 @@ server.get('/approbation', function(req, res, next) {
     var params = {
         TableName: table,
         Key: {
-            id: '29:17l_jznYUiJIaDy7kFmCLx6dGc10_GUGpF6B0CV8imgY' //Hardcoded for now, but could be any id.
+            id: 'U62N5L0EL:T63CBFV98' //Hardcoded for now, but could be any id.
         }
     };
     
