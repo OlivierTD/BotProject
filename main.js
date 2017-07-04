@@ -205,10 +205,10 @@ bot.dialog('address', function (session, args) {
 
 //Dialog to test approbation.
 bot.dialog('approbation', [
-        function (session, test, args) {
+        function (session, params) {
             session.send('Hello world from approbation.');
-            for (var k in test) {
-                session.send(k + ": " + args[k]);
+            for (var k in params) {
+                session.send(k + ": " + params[k]);
             }
             builder.Prompts.choice(session, 'Approval Request',"Approve|Decline");
         },
