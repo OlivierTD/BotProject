@@ -217,9 +217,6 @@ bot.dialog('approbation', [
                 case 'Decline':
                     session.endDialog('You declined the transaction.');
                     break;
-                default:
-                    session.endDialog('Oops, something went wrong.');
-                    break;
             }
         }
 ]);
