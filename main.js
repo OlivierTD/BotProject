@@ -205,7 +205,7 @@ bot.dialog('address', function (session, args) {
 
 //Dialog to test approbation.
 bot.dialog('approbation', [
-        function (session, args) {
+        function (session, test, args) {
             session.send('Hello world from approbation.');
             for (var k in args) {
                 session.send(k + ": " + args[k]);
