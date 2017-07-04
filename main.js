@@ -93,6 +93,36 @@ server.get('/approbation', function(req, res, next) {
 });
 
 
+//Where server receives answer from bot for approbation
+server.post('/approb-answer', function approval(req, res, next) {
+    
+    var params = {
+        Item: {
+            requestID: "5555-5555-5556",
+            accountID: "0000-0000-0001",
+            trxCode: "9999-9999-9990",
+            state: "approved"
+        },
+        TableName: "requests"
+    };
+
+    docClient.put(params, function(err, data) {
+        if (err) {
+            console.log(err, err.stack);
+            session.send("Error occured when trying to put in dynamoDB: ", err);
+            session.endDialog();
+        }
+        else {
+            console.log("Successfully registered data in dynamoDB: " + JSON.stringify(params));
+            session.send("Successfully registered data in dynamoDB: " + JSON.stringify(params));
+            session.endDialog();
+        }
+    });
+    
+    session.endDialog("You %s the transaction", args.data);
+    
+});
+
 
 //Receive message from user and respond accordingly.
 var bot = new builder.UniversalBot(connector, function(session) {
