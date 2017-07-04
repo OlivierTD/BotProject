@@ -28,15 +28,20 @@ server.get('/', restify.serveStatic({
     default: '/index.html'
 }));
 
+server.get('/approb-form', restify.serverStatic({
+    directory: __dirname,
+    default: 'approb-form.html'
+}));
+
 //Call that sends an approbation request to the appropriate user.
-server.get('/approbation', function(req, res, next) {
+server.post('/approbation', function(req, res, next) {
     
    //Will create a request if it does not exist. 
     var params = {
         Item: {
-            requestID: "5555-5555-5556",
-            accountID: "0000-0000-0001",
-            trxCode: "9999-9999-9990",
+            requestID: req.requestID,
+            accountID: req.accountID,
+            trxCode: req.trxCode,
             state: "pending"
         },
         TableName: "requests"
@@ -45,27 +50,27 @@ server.get('/approbation', function(req, res, next) {
     docClient.put(params, function(err, data) {
         if (err) {
             console.log(err, err.stack);
-            session.send("Error occured when trying to put in dynamoDB: ", err);
-            session.endDialog();
         }
         else {
             console.log("Successfully registered data in dynamoDB: " + JSON.stringify(params));
-            session.send("Successfully registered data in dynamoDB: " + JSON.stringify(params));
-            session.endDialog();
         }
     }); 
 
 
+
+    //-------------------------------------------------------------------------
     var userInfo;
-    var params = {
+    var userParams = {
         TableName: table,
         Key: {
             id: 'U62N5L0EL:T63CBFV98' //Hardcoded for now, but could be any id.
         }
     };
-    
+    //-------------------------------------------------------------------------
+
+
     //Attempt to fetch the address information of the user's conversation
-    docClient.get(params, function(err, data){
+    docClient.get(userParams, function(err, data){
         if (err) {
             console.log("Error while trying to fetch the user for approbation: ", err);
         }
@@ -86,7 +91,7 @@ server.get('/approbation', function(req, res, next) {
             console.log("Address to send approbation: ", address);
             res.send('triggered bot approbation successfully. Here\'s the address info: ' + JSON.stringify(address));
             
-            bot.beginDialog(address, "approbation");
+            bot.beginDialog(address, "approbation", {params: params});
         }
     });
     next();  
@@ -165,7 +170,6 @@ bot.dialog('address', function (session, args) {
         }
     };
 
-
     //Verifying if user already exists in DynamoDB
     docClient.get(paramsGet, function(err, data) {
         if (err) {
@@ -200,11 +204,13 @@ bot.dialog('address', function (session, args) {
 
 });
 
-//Basi dialog to test approbation.
+//Dialog to test approbation.
 bot.dialog('approbation', [
-        function (session) {
+        function (session, args) {
             session.send('Hello world from approbation.');
-            
+            for (var k in args) {
+                session.send(k + ": " + args[k]);
+            }
             builder.Prompts.choice(session, 'Approval Request',"Approve|Decline");
         },
         function(session, results){
@@ -222,6 +228,7 @@ bot.dialog('approbation', [
         }
 ]);
 
+//Change value of trx to Approve or Decline form user's input.
 function approval(session, value) {
     var params = {
         Item: {
