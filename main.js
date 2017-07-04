@@ -210,13 +210,16 @@ bot.dialog('approbation', [
         function(session, results){
             console.log('results:\n');
             console.log(results);
-
+            session.send('You said: \n');
             switch(results.response.entity) {
                 case 'Approve':
                     session.send('You approved the transaction.');
                     break;
                 case 'Decline':
                     session.send('You declined the transaction.');
+                    break;
+                default:
+                    session.send('Oops, something went wrong.');
                     break;
             }
         }
