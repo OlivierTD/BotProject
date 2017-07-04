@@ -201,25 +201,43 @@ bot.dialog('address', function (session, args) {
 });
 
 //Basi dialog to test approbation.
-bot.dialog('approbation', function(session, args) {
-    session.send('Hello world from approbation.');
-    
-    var card = new builder.HeroCard(session)
-        .title('Approval Request')
-        .subtitle('trx-id: 9999-9999-9990')
-        .text('Amount: 0.000000000000001$')
-        .buttons([
-                builder.CardAction.dialogAction(session, 'approbation-answer', 'approved', 'Approve'),
-                builder.CardAction.dialogAction(session, 'approbation-answer', 'declined', 'Decline')
-        ]);
-    var msg = new builder.Message(session).addAttachment(card);
+bot.dialog('approbation', [
+        function(session) {
+            session.send('Hello world from approbation.');
+            
+            builder.Prompts.choice(session, 'Approval Request\ntrx-id: 9999-9999-9990\nAmount: 0.00000001$',['Approve', 'Decline']);
+        },
+        function(session, result){
+            console.log('result:\n');
+            console.log(result);
 
+            switch(result.response.entity) {
+                case 'Approve':
+                    session.send('You approved the transaction.');
+                    break;
+                case 'Decline':
+                    session.send('You declined the transaction.');
+                    break;
+            }
+        }
+]);
 
-
-    session.send(msg);
-
-    session.endDialog(); 
-}); 
+//    var card = new builder.HeroCard(session)
+//        .title('Approval Request')
+//        .subtitle('trx-id: 9999-9999-9990')
+//        .text('Amount: 0.000000000000001$')
+//        .buttons([
+//                builder.CardAction.dialogAction(session, 'approbation-answer', 'approved', 'Approve'),
+//                builder.CardAction.dialogAction(session, 'approbation-answer', 'declined', 'Decline')
+//        ]);
+//    var msg = new builder.Message(session).addAttachment(card);
+//
+//
+//
+//    session.send(msg);
+//
+//    session.endDialog(); 
+//}); 
 
 //bot.beginDialogAction('approbation-answer', 'approbationAnswer');
 //
@@ -251,11 +269,6 @@ bot.dialog('approbation', function(session, args) {
 //    session.endDialog("You %s the transaction", args.data);
 //});
 
-bot.dialog('approb-answer', function(session, args) {
-   session.send('Hello world from approb-answer'); 
-    
-    
-});
 
 
 server.listen(process.env.PORT || 8081);
