@@ -6,7 +6,7 @@
         "ejs": "latest",
         "aws-sdk": "latest",
         "body-parser": "latest",
-        "botbuilder": "3.7.0",
+        "botbuilder": "latest",
         "restify": "latest"
     },
     "scripts": {
