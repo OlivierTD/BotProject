@@ -204,42 +204,16 @@ bot.dialog('address', function (session, args) {
 bot.dialog('approbation', function(session, args) {
     session.send('Hello world from approbation.');
     
-    //var card = new builder.HeroCard(session)
-    //    .title('Approval Request')
-    //    .subtitle('trx-id: 9999-9999-9990')
-    //    .text('Amount: 0.000000000000001$')
-    //    .buttons([
-    //            builder.CardAction.dialogAction(session, 'approbation-answer', 'approved', 'Approve'),
-    //            builder.CardAction.dialogAction(session, 'approbation-answer', 'declined', 'Decline')
-    //    ]);
-    //var msg = new builder.Message(session).addAttachment(card);
+    var card = new builder.HeroCard(session)
+        .title('Approval Request')
+        .subtitle('trx-id: 9999-9999-9990')
+        .text('Amount: 0.000000000000001$')
+        .buttons([
+                builder.CardAction.dialogAction(session, 'approbation-answer', 'approved', 'Approve'),
+                builder.CardAction.dialogAction(session, 'approbation-answer', 'declined', 'Decline')
+        ]);
+    var msg = new builder.Message(session).addAttachment(card);
 
-    var msg = 
-    {
-        "text": "Approval Request",
-        "attachments": [
-            {
-                "text": "trx-id: 9999-9999-9990 Amount: 0.00000000001$",
-                "fallback": "Oops, something went wrong.",
-                "color": "#3AA3E3",
-                "attachment_type": "default",
-                "actions": [
-                    {
-                        "name": "approbation",
-                        "text": "Approve",
-                        "type": "button",
-                        "value": "approve"
-                    },
-                    {
-                        "name": "approbation",
-                        "text": "Decline",
-                        "type": "button",
-                        "value": "decline",
-                    }
-                ]
-            }
-        ]
-    }
 
 
     session.send(msg);
