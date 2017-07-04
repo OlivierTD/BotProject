@@ -205,21 +205,20 @@ bot.dialog('approbation', [
         function (session) {
             session.send('Hello world from approbation.');
             
-            builder.Prompts.choice(session, 'Approval Request',"Approve|Decline", "button");
+            builder.Prompts.choice(session, 'Approval Request',"Approve|Decline");
         },
         function(session, results){
             console.log('results:\n');
             console.log(results);
-            session.send('You said: \n');
             switch(results.response.entity) {
                 case 'Approve':
-                    session.send('You approved the transaction.');
+                    session.endDialog('You approved the transaction.');
                     break;
                 case 'Decline':
-                    session.send('You declined the transaction.');
+                    session.endDialog('You declined the transaction.');
                     break;
                 default:
-                    session.send('Oops, something went wrong.');
+                    session.endDialog('Oops, something went wrong.');
                     break;
             }
         }
