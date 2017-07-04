@@ -275,7 +275,7 @@ function approval(value) {
             requestID: "5555-5555-5556",
             accountID: "0000-0000-0001",
             trxCode: "9999-9999-9990",
-            state: value
+            state: value.response.entity
         },
         TableName: "requests"
     };
