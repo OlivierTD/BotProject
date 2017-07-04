@@ -1,5 +1,5 @@
 var restify = require("restify");
-var builder = require("builder");
+var builder = require("botbuilder");
 var AWS = require("aws-sdk");
 
 AWS.config.update({
