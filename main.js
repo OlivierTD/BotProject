@@ -213,7 +213,7 @@ bot.dialog('approbation', [
             builder.Prompts.choice(session, 'Approval Request',"Approve|Decline");
         },
         function(session, results){
-            approval(session, results);
+            approval(session, results, params);
             switch(results.response.entity) {
                 case 'Approve':
                     session.send('You approved the transaction.');
@@ -228,12 +228,12 @@ bot.dialog('approbation', [
 ]);
 
 //Change value of trx to Approve or Decline form user's input.
-function approval(session, value) {
+function approval(session, value, params) {
     var params = {
         Item: {
-            requestID: "5555-5555-5556",
-            accountID: "0000-0000-0001",
-            trxCode: "9999-9999-9990",
+            requestID: params.requestID,
+            accountID: params.accountID,
+            trxCode: params.trxCode,
             state: value.response.entity
         },
         TableName: "requests"
