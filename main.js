@@ -12,6 +12,7 @@ var table = "botids";
 
 //Restify Server
 var server = restify.createServer();
+server.use(restify.bodyParser());
 
 //Chat connector
 var connector = new builder.ChatConnector({
@@ -29,17 +30,17 @@ server.get('/', restify.serveStatic({
 }));
 
 //Call that sends an approbation request to the appropriate user.
-server.post('/approbation', function(req, res, next) {
+server.post('/approbation/:requestID&:accountID&:trxCode', function(req, res, next) {
    
-    console.log("Request from post: " + req);
+    console.log("Request from post: " + req.params);
 
 
    //Will create a request if it does not exist. 
     var params = {
         Item: {
-            requestID: req.requestID,
-            accountID: req.accountID,
-            trxCode: req.trxCode,
+            requestID: req.params.requestID,
+            accountID: req.params.accountID,
+            trxCode: req.params.trxCode,
             state: "pending"
         },
         TableName: "requests"
@@ -92,7 +93,7 @@ server.post('/approbation', function(req, res, next) {
             bot.beginDialog(address, "approbation", {params: params});
         }
     });
-    next();  
+    return next();  
 });
 
 
