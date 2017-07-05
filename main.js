@@ -34,7 +34,6 @@ server.post('/approbation/:requestID&:accountID&:trxCode', function(req, res, ne
    
     console.log("Request from post: " + req.params);
 
-
    //Will create a request if it does not exist. 
     var params = {
         Item: {
@@ -210,9 +209,9 @@ bot.dialog('approbation', [
             for (var k in params) {
                 session.send(k + ": " + params[k]);
             }
-            builder.Prompts.choice(session, 'Approval Request',"Approve|Decline");
+            builder.Prompts.choice(session, 'Approval Request',"Approve|Decline", params);
         },
-        function(session, results){
+        function(session, results, params){
             approval(session, results, params);
             switch(results.response.entity) {
                 case 'Approve':
@@ -247,7 +246,6 @@ function approval(session, value, params) {
         }
         else {
             console.log("Successfully registered data in dynamoDB: " + JSON.stringify(params));
-            session.send("Successfully registered data in dynamoDB: " + JSON.stringify(params));
             session.endDialog();
         }
     });
