@@ -132,7 +132,28 @@ var bot = new builder.UniversalBot(connector, function(session) {
     }
     else {
         session.send("You said: %s", session.message.text);
-        session.send("If you want to register yourself so that the bot can send you approbations, please type \"register me\"");
+    
+	//-------------------------------------------------------------------------
+    	var userInfo;
+    	var userParams = {
+        	TableName: table,
+        	Key: {
+            	id: 'U62N5L0EL:T63CBFV98' //Hardcoded for now, but could be any id.
+        	}
+    	};
+    	//-------------------------------------------------------------------------
+
+
+    	//Attempt to fetch the address information of the user's conversation
+    	docClient.get(userParams, function(err, data){
+        	if (err) {
+            		console.log("Error while trying to fetch the user for approbation: ", err);
+        	}
+        	else {
+            		userInfo = data.Item;   
+     	 	  	session.send("If you want to register yourself so that the bot can send you approbations, please type \"register me\"");
+        	}
+    	});
     }    
 });
 
