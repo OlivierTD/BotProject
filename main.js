@@ -87,7 +87,8 @@ server.post('/approbation/:requestID&:accountID&:trxCode', function(req, res, ne
                 serviceUrl: userInfo.serviceURL };
     
             console.log("Address to send approbation: ", address);
-            res.send('triggered bot approbation successfully. Here\'s the address info: ' + JSON.stringify(address) +"\n\nHere's the parameters sent: " + params);
+            res.send('triggered bot approbation successfully. Here\'s the address info: ' 
+                    + JSON.stringify(address) +"\n\nHere's the parameters sent: " + params);
             
             bot.beginDialog(address, "approbation", params.Item);
         }
@@ -103,7 +104,7 @@ var bot = new builder.UniversalBot(connector, function(session) {
     else {
         session.send("You said: %s", session.message.text);
     
-	//-------------------------------------------------------------------------
+	    //-------------------------------------------------------------------------
     	var userInfo;
     	var userParams = {
         	TableName: table,
@@ -204,14 +205,14 @@ bot.dialog('approbation', [
             builder.Prompts.choice(session, 'Approval Request',"Approve|Decline", params);
         },
         
-        function(session, results){
+        function(session, results, params){
             
             session.send('You approved the transaction.');
             var params = {
                 Item: {
-                    requestID: ///////
-                    accountID: ///////
-                    trxCode: ///////
+                    requestID: params.requestID,
+                    accountID: params.accountID,
+                    trxCode: params.trxCode,
                     state: results
                 },
                 TableName: "requests"
