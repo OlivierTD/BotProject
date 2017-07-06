@@ -194,10 +194,14 @@ bot.dialog('address', function (session, args) {
 
 });
 
+
+var approvalAnswer;
+
 //Dialog to test approbation.
 bot.dialog('approbation', [
         
         function (session, params) {
+            approvalAnswer = params;
             session.send('Hello world from approbation.');
             for (var k in params) {
                 session.send(k + ": " + params[k]);
@@ -206,18 +210,15 @@ bot.dialog('approbation', [
         },
         
         function(session, results){
-            
-            session.send('You approved the transaction.');
             var params = {
                 Item: {
-                    requestID: params.requestID,
-                    accountID: params.accountID,
-                    trxCode: params.trxCode,
+                    requestID: approvalAnswer.requestID,
+                    accountID: approvalAnswer.accountID,
+                    trxCode: approvalAnswer.trxCode,
                     state: results
                 },
                 TableName: "requests"
             };
-
             docClient.put(params, function(err, data) {
                 if (err) {
                     console.log(err, err.stack);
@@ -229,7 +230,7 @@ bot.dialog('approbation', [
                     session.endDialog();
                 }
             });
-                 
+            session.send('You approved the transaction.');     
         }
         
 ]);
