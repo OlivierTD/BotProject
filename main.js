@@ -225,6 +225,7 @@ bot.dialog('address', function (session, args) {
 
 //Dialog to test approbation.
 bot.dialog('approbation', [
+        
         function (session, params) {
             session.send('Hello world from approbation.');
             for (var k in params) {
@@ -232,45 +233,35 @@ bot.dialog('approbation', [
             }
             builder.Prompts.choice(session, 'Approval Request',"Approve|Decline", params);
         },
-        function(session, results, params){
-            approval(session, results, params);
-            switch(results.response.entity) {
-                case 'Approve':
-                    session.send('You approved the transaction.');
-                    break;
-                case 'Decline':
-                    session.send('You declined the transaction.');
-                    break;
-                default:
-                    session.send('haHA!');
-            }
+        
+        function(session, results){
+            
+            session.send('You approved the transaction.');
+            var params = {
+                Item: {
+                    requestID: ///////
+                    accountID: ///////
+                    trxCode: ///////
+                    state: results
+                },
+                TableName: "requests"
+            };
+
+            docClient.put(params, function(err, data) {
+                if (err) {
+                    console.log(err, err.stack);
+                    session.send("Error occured when trying to put in dynamoDB: ", err);
+                    session.endDialog();
+                }
+                else {
+                    console.log("Successfully registered data in dynamoDB: " + JSON.stringify(params));
+                    session.endDialog();
+                }
+            });
+                 
         }
+        
 ]);
-
-//Change value of trx to Approve or Decline form user's input.
-function approval(session, value, params) {
-    var params = {
-        Item: {
-            requestID: params.requestID,
-            accountID: params.accountID,
-            trxCode: params.trxCode,
-            state: value.response.entity
-        },
-        TableName: "requests"
-    };
-
-    docClient.put(params, function(err, data) {
-        if (err) {
-            console.log(err, err.stack);
-            session.send("Error occured when trying to put in dynamoDB: ", err);
-            session.endDialog();
-        }
-        else {
-            console.log("Successfully registered data in dynamoDB: " + JSON.stringify(params));
-            session.endDialog();
-        }
-    });
-};
 
 
 server.listen(process.env.PORT || 8081);
