@@ -5,12 +5,11 @@
     "dependencies": {
         "ejs": "latest",
         "aws-sdk": "latest",
-        "express": "latest",
         "body-parser": "latest",
         "botbuilder": "latest",
         "restify": "latest"
     },
     "scripts": {
-        "start": "node app.js"
+        "start": "node main.js"
     }
 }
