@@ -215,7 +215,7 @@ bot.dialog('approbation', [
                     requestID: approvalAnswer.requestID,
                     accountID: approvalAnswer.accountID,
                     trxCode: approvalAnswer.trxCode,
-                    state: results
+                    state: results.response.entity
                 },
                 TableName: "requests"
             };
