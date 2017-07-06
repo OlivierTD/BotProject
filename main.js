@@ -202,10 +202,10 @@ bot.dialog('approbation', [
             for (var k in params) {
                 session.send(k + ": " + params[k]);
             }
-            builder.Prompts.choice(session, 'Approval Request',"Approve|Decline", params);
+            builder.Prompts.choice(session, 'Approval Request',"Approve|Decline");
         },
         
-        function(session, results, params){
+        function(session, results){
             
             session.send('You approved the transaction.');
             var params = {
