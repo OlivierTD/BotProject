@@ -109,7 +109,7 @@ var bot = new builder.UniversalBot(connector, function(session) {
     	var userParams = {
         	TableName: table,
         	Key: {
-            	id: 'U62N5L0EL:T63CBFV98' //Hardcoded for now, but could be any id.
+            	id: 'U648NQP6D:T63CBFV98' //Hardcoded for now, but could be any id.
         	}
     	};
     	//-------------------------------------------------------------------------
